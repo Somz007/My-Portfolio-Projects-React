@@ -25,13 +25,28 @@ import { useState, useEffect } from 'react'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase/config'
 import { deletePhoto as firebaseDeletePhoto } from '../firebase/storage'
+import { useAuth } from '../context/AuthContext'
 
 export function usePhotos() {
+  const { user } = useAuth()
   const [photos,  setPhotos]  = useState([])
   const [loading, setLoading] = useState(true)
   const [error,   setError]   = useState(null)
 
   useEffect(() => {
+    /* Our Firestore rules require an authenticated user to read photos.
+       If we attach the listener before sign-in completes, the read is
+       denied and the listener errors out. So we only subscribe once a
+       user exists, and re-subscribe whenever the auth state changes
+       (the [user] dependency below drives that). */
+    if (!user) {
+      setPhotos([])
+      setLoading(false)
+      return
+    }
+
+    setLoading(true)
+
     /* Build a query: all documents in "photos", newest first.
        orderBy requires a Firestore index — for a single field Firebase
        creates it automatically. Composite indexes need manual creation. */
@@ -76,7 +91,7 @@ export function usePhotos() {
        unmounts. Without this, Firebase would continue sending updates
        to a component that no longer exists. */
     return unsubscribe
-  }, []) /* Run once — the snapshot listener stays alive until cleanup. */
+  }, [user]) /* Re-subscribe when the user signs in or out. */
 
   /**
    * deletePhoto — deletes a photo from Storage and Firestore.
