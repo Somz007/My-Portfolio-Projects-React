@@ -1,0 +1,15 @@
+{
+  "name": "my-portfolio-projects-react",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Four React, Firebase & Flask projects by Somz007",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  },
+  "author": "Semeshan (Somz007)",
+  "license": "MIT"
+}

@@ -201,6 +201,32 @@ def update(id):
 
 ---
 
+## Deployment
+
+> **This app cannot run on GitHub Pages.** GitHub Pages serves static files
+> only (HTML/CSS/JS) — it has no Python runtime. Flask needs a live server
+> process to handle routing, sessions, password hashing, and SQLite queries
+> on every request.
+
+Unlike projects 01–03 in this portfolio (static React SPAs that deploy to
+GitHub Pages), this Flask app requires a Python host. Free-tier options:
+
+| Host | Notes |
+|---|---|
+| [Render](https://render.com) | Free web service; add a `gunicorn` start command |
+| [Railway](https://railway.app) | Simple Python deploys from GitHub |
+| [PythonAnywhere](https://www.pythonanywhere.com) | Beginner-friendly, Flask-focused |
+| [Fly.io](https://fly.io) | Container-based, generous free tier |
+
+For production deployment, you would also:
+- Set a strong `SECRET_KEY` environment variable (enforced by `ProductionConfig`)
+- Serve via a WSGI server (`gunicorn run:app`) rather than Flask's dev server
+- Switch SQLite to PostgreSQL for concurrent writes (change `DATABASE_URL` only)
+
+Locally it runs with a single command — see [Getting Started](#getting-started) above.
+
+---
+
 ## Status
 
 > Complete. Next: Markdown rendering for post bodies, user avatars (Gravatar), search, tags.
