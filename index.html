@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Portfolio — Somz007</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0B0B12;
+      --surface: #14141F;
+      --border: #24243A;
+      --text: #ECEAF4;
+      --muted: #7C7C97;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      background-image: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(120,90,220,0.10), transparent 70%);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 80px 24px 64px; }
+    header { margin-bottom: 56px; }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(32px, 6vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+    .lede { color: var(--muted); font-size: 17px; margin-top: 16px; max-width: 560px; }
+    .links { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .links a {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      color: var(--text); text-decoration: none;
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 8px 16px; transition: border-color .2s, background .2s;
+    }
+    .links a:hover { border-color: var(--muted); background: var(--surface); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .card {
+      position: relative; display: flex; flex-direction: column;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; text-decoration: none; color: inherit;
+      transition: transform .25s cubic-bezier(0.16,1,0.3,1), border-color .25s;
+      overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+      background: var(--accent); opacity: 0; transition: opacity .25s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .card:hover::before { opacity: 1; }
+    .num {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      color: var(--accent); font-weight: 500;
+    }
+    .card h2 { font-size: 21px; font-weight: 700; margin: 12px 0 8px; }
+    .card p { color: var(--muted); font-size: 14px; flex: 1; }
+    .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 16px; }
+    .stack span {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--muted); border: 1px solid var(--border);
+      border-radius: 999px; padding: 3px 10px;
+    }
+    .go { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+    .flask {
+      grid-column: 1 / -1; display: flex; align-items: center; gap: 16px;
+      background: transparent; border: 1px dashed var(--border);
+      border-radius: 16px; padding: 20px 28px; color: var(--muted); font-size: 14px;
+    }
+    .flask strong { color: var(--text); font-weight: 500; }
+    .flask a { color: #6FA8FF; text-decoration: none; }
+    footer {
+      margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
+      color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    footer a { color: var(--text); text-decoration: none; }
+    footer a:hover { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">React Portfolio</p>
+      <h1>Four projects in React,<br>Firebase & Flask.</h1>
+      <p class="lede">
+        A movie browser, a job board, a real-time photo gallery, and a full-stack
+        blog — each built to explore a different corner of modern web development.
+      </p>
+      <div class="links">
+        <a href="https://github.com/Somz007/My-Portfolio-Projects-React" target="_blank" rel="noopener">GitHub Repo</a>
+        <a href="https://github.com/Somz007" target="_blank" rel="noopener">@Somz007</a>
+      </div>
+    </header>
+
+    <main class="grid">
+
+      <a class="card" href="project-01-tmdb-movie-app/" style="--accent:#E8C87A">
+        <span class="num">01</span>
+        <h2>TMDB Movie App</h2>
+        <p>Search and browse movies with a slide-in detail panel, cast, and ratings.</p>
+        <div class="stack"><span>React 18</span><span>Vite</span><span>TMDB API</span><span>CSS Modules</span></div>
+        <span class="go">View live →</span>
+      </a>
+      <a class="card" href="project-02-github-jobs-app/" style="--accent:#58A6FF">
+        <span class="num">02</span>
+        <h2>DevJobs Board</h2>
+        <p>Remote developer job board with live filters and client-side pagination.</p>
+        <div class="stack"><span>React 18</span><span>Vite</span><span>Remotive API</span><span>DOMPurify</span></div>
+        <span class="go">View live →</span>
+      </a>
+      <a class="card" href="project-03-photo-gallery/" style="--accent:#E85D26">
+        <span class="num">03</span>
+        <h2>Luminary Gallery</h2>
+        <p>Upload photos to a real-time masonry grid with Google sign-in and a lightbox.</p>
+        <div class="stack"><span>React 18</span><span>Firebase</span><span>Cloudinary</span><span>Vite</span></div>
+        <span class="go">View live →</span>
+      </a>
+      <div class="flask">
+        <span style="font-size:22px">🐍</span>
+        <div>
+          <strong>Project 04 — Flask Microblog</strong> is a Python/Flask server app and
+          can't run on GitHub Pages.
+          <a href="https://github.com/Somz007/My-Portfolio-Projects-React/tree/main/project-04-flask-microblog" target="_blank" rel="noopener">View the source & run instructions →</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>Built by Semeshan</span>
+      <a href="https://github.com/Somz007" target="_blank" rel="noopener">github.com/Somz007</a>
+    </footer>
+  </div>
+</body>
+</html>
