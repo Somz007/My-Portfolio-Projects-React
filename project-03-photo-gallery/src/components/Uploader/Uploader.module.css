@@ -1,0 +1,147 @@
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Drop zone ────────────────────────────────────────────────────── */
+.zone {
+  width: 100%;
+  min-height: 140px;
+  border: 2px dashed var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background  0.2s ease;
+  outline-offset: 4px;
+}
+
+.zone:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+/* Drag-over state — solid border, stronger background */
+.dragging {
+  border-style: solid;
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+.hiddenInput {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+}
+
+.zoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  pointer-events: none; /* let clicks fall through to the zone */
+  text-align: center;
+}
+
+.iconWrapper {
+  color: var(--color-ink-subtle);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.zone:hover .iconWrapper,
+.iconDragging {
+  color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+.zoneTextPrimary {
+  font-size: 14px;
+  color: var(--color-ink-muted);
+}
+
+.browseLink {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.zoneTextSecondary {
+  font-size: 12px;
+  color: var(--color-ink-subtle);
+}
+
+/* ── Upload progress list ─────────────────────────────────────────── */
+.uploadList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.uploadItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  animation: fadeUp 0.2s var(--ease-out);
+}
+
+.uploadIcon {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  flex-shrink: 0;
+  color: var(--color-ink-muted);
+}
+
+.uploadBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.uploadName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Thin progress track */
+.progressTrack {
+  width: 100%;
+  height: 3px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+/* Animated terracotta fill */
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), #FF8C5A);
+  border-radius: var(--radius-pill);
+  transition: width 0.15s ease;
+}
+
+.uploadStatus {
+  font-size: 11px;
+  color: var(--color-ink-muted);
+}
+
+.done  { color: var(--color-success); }
+.error { color: var(--color-error); }
