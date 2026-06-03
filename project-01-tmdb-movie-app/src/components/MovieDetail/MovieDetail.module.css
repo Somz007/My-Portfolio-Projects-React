@@ -1,0 +1,267 @@
+/* ── Dim backdrop that fills the viewport ─────────────────────── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── Slide-in panel ───────────────────────────────────────────── */
+.panel {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  height: 100%;
+  background: var(--color-surface);
+  overflow-y: auto;
+  animation: slideInRight 0.35s var(--ease-out);
+  box-shadow: var(--shadow-detail);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Close button ─────────────────────────────────────────────── */
+.closeBtn {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: var(--color-surface-2);
+  border-color: var(--color-gold-dim);
+  color: var(--color-gold);
+}
+
+/* ── Loading placeholder ──────────────────────────────────────── */
+.loadingState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Hero section ─────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 280px;
+  background: var(--color-surface-2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.heroImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+/* Gradient so text over the image is always legible */
+.heroGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-surface) 100%
+  );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-end;
+  padding: var(--space-7) var(--space-5) var(--space-5);
+}
+
+.poster {
+  width: 90px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+.heroMeta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.yearMono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--color-text);
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Stat pills row */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.stat {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Scrollable body ──────────────────────────────────────────── */
+.body {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Genre chips */
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-gold-dim);
+  color: var(--color-gold);
+  letter-spacing: 0.06em;
+}
+
+/* Section: overview, cast */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-2);
+}
+
+.overview {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--color-text);
+  opacity: 0.85;
+}
+
+/* ── Cast grid ────────────────────────────────────────────────── */
+.castGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--space-3);
+}
+
+.castCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.castAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.castAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.castInitial {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--color-text-muted);
+}
+
+.castName {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.castCharacter {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* ── Mobile adjustments ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .panel { max-width: 100%; }
+  .heroContent { flex-direction: column; align-items: flex-start; }
+  .poster { width: 70px; }
+}

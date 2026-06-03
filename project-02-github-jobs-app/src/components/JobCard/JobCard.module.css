@@ -1,0 +1,197 @@
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  /* Staggered entrance — delay applied inline */
+  animation: fadeUp 0.4s var(--ease-out) both;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s ease;
+  outline-offset: 3px;
+  overflow: hidden;
+}
+
+/* ── Left blue border sweep — the signature hover effect ─────────── */
+/* ::before is the coloured left border; starts at 0 height, grows to 100% */
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  background: var(--color-blue);
+  border-radius: 0 2px 2px 0;
+  transition: height 0.25s var(--ease-out), top 0.25s var(--ease-out);
+}
+
+.card:hover::before,
+.card:focus-visible::before {
+  height: 100%;
+  top: 0;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: var(--color-border-hover);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Company avatar ──────────────────────────────────────────────── */
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+
+.initials {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Card body ───────────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  min-width: 0;  /* prevents flex children from overflowing */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.company {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s ease;
+}
+
+.card:hover .title {
+  color: var(--color-blue);
+}
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.location {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* Clamp long location strings */
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Job type badges ─────────────────────────────────────────────── */
+.badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* Full Time — green */
+.full      { color: var(--color-green);  background: var(--color-green-bg);  border-color: var(--color-green); }
+/* Part Time — muted */
+.part      { color: var(--color-text-muted); background: var(--color-surface-2); border-color: var(--color-border); }
+/* Contract — orange */
+.contract  { color: var(--color-orange); background: var(--color-orange-bg); border-color: var(--color-orange); }
+/* Freelance — purple */
+.freelance { color: var(--color-purple); background: var(--color-purple-bg); border-color: var(--color-purple); }
+/* Internship — blue */
+.internship { color: var(--color-blue); background: var(--color-blue-bg); border-color: var(--color-blue); }
+/* Fallback */
+.default   { color: var(--color-text-muted); background: var(--color-surface-2); border-color: var(--color-border); }
+
+/* ── Chevron ─────────────────────────────────────────────────────── */
+.chevron {
+  font-size: 22px;
+  color: var(--color-text-subtle);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+  line-height: 1;
+}
+
+.card:hover .chevron {
+  transform: translateX(3px);
+  color: var(--color-blue);
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .card { padding: var(--space-3) var(--space-4); gap: var(--space-3); }
+  .chevron { display: none; }
+  .date { display: none; }
+}

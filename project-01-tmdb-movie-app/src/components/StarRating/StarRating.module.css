@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Relative container so the fill can overlay the base */
+.stars {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+/* Dim background stars */
+.base {
+  color: var(--color-border);
+  display: block;
+}
+
+/* Gold fill: absolutely positioned over base, clipped by width */
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--color-gold);
+  display: block;
+}
+
+.score {
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.votes {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}

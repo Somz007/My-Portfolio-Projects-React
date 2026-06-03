@@ -1,0 +1,44 @@
+@keyframes spinCW {
+  to { transform: rotate(360deg); }
+}
+@keyframes spinCCW {
+  to { transform: rotate(-360deg); }
+}
+
+.wrapper {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* Size variants */
+.sm  { width: 24px;  height: 24px; }
+.md  { width: 48px;  height: 48px; }
+.lg  { width: 72px;  height: 72px; }
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.outer {
+  inset: 0;
+  border-width: 2px;
+  border-top-color: var(--color-gold);
+  border-right-color: var(--color-gold-dim);
+  animation: spinCW 1s linear infinite;
+}
+
+.inner {
+  inset: 20%;
+  border-width: 2px;
+  border-bottom-color: var(--color-gold);
+  border-left-color: var(--color-gold-dim);
+  animation: spinCCW 0.8s linear infinite;
+}
+
+/* Shrink inner proportionally for sm variant */
+.sm .inner  { inset: 25%; }
+.lg .inner  { inset: 20%; }
