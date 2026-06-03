@@ -1,0 +1,130 @@
+/* ── Typography ──────────────────────────────────────────────────── */
+body {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  background-color: #F8F7F4;
+  color: #2C2C2C;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand {
+  font-family: 'Lora', Georgia, serif;
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────── */
+.navbar {
+  background-color: #1A1A2E !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.navbar-brand {
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  color: #fff !important;
+}
+
+.navbar-brand:hover { opacity: 0.85; }
+
+/* ── Avatar circles ──────────────────────────────────────────────── */
+.avatar-sm,
+.avatar-xs,
+.avatar-md,
+.avatar-lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 600;
+  background-color: #4A90D9;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.avatar-xs { width: 20px;  height: 20px;  font-size: 10px; }
+.avatar-sm { width: 28px;  height: 28px;  font-size: 12px; }
+.avatar-md { width: 36px;  height: 36px;  font-size: 15px; }
+.avatar-lg { width: 64px;  height: 64px;  font-size: 26px; }
+
+/* ── Cards ───────────────────────────────────────────────────────── */
+.card {
+  border: 1px solid #E8E5DF;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.post-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10) !important;
+  transform: translateY(-2px);
+}
+
+/* ── Post title links ─────────────────────────────────────────────── */
+.post-title-link {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.05rem;
+  transition: color 0.15s ease;
+}
+
+.post-title-link:hover { color: #4A90D9 !important; }
+
+/* ── Post body ───────────────────────────────────────────────────── */
+.post-body {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #3A3A3A;
+  max-width: 68ch;
+}
+
+/* ── Forms ───────────────────────────────────────────────────────── */
+.form-control:focus {
+  border-color: #4A90D9;
+  box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+}
+
+textarea.form-control {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.btn-primary {
+  background-color: #4A90D9;
+  border-color: #4A90D9;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #357ABD;
+  border-color: #357ABD;
+}
+
+/* ── Pagination ──────────────────────────────────────────────────── */
+.page-link {
+  color: #4A90D9;
+  border-radius: 6px !important;
+  margin: 0 2px;
+}
+
+.page-item.active .page-link {
+  background-color: #4A90D9;
+  border-color: #4A90D9;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+footer {
+  background-color: #F8F7F4;
+  border-color: #E8E5DF !important;
+}
+
+/* ── Alerts ──────────────────────────────────────────────────────── */
+.alert {
+  border-radius: 8px;
+  border-left-width: 4px;
+}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+
+    <!-- Post header -->
+    <article>
+      <header class="mb-4">
+        <h1 class="display-6 fw-semibold lh-sm mb-3">{{ post.title }}</h1>
+
+        <div class="d-flex align-items-center gap-2 text-muted small">
+          <!-- Author avatar + link -->
+          <a href="{{ url_for('blog.profile', username=post.author.username) }}"
+             class="d-flex align-items-center gap-2 text-decoration-none text-muted">
+            <span class="avatar-md">{{ post.author.username[0]|upper }}</span>
+            <strong class="text-dark">{{ post.author.username }}</strong>
+          </a>
+
+          <span>·</span>
+          <time datetime="{{ post.created_at.isoformat() }}">
+            {{ post.created_at.strftime('%B %d, %Y') }}
+          </time>
+
+          {% if post.updated_at != post.created_at %}
+            <span>· Edited {{ post.updated_at.strftime('%b %d') }}</span>
+          {% endif %}
+        </div>
+      </header>
+
+      <hr class="mb-4">
+
+      <!-- Post body — nl2br converts newlines to <br> for readable paragraphs -->
+      <div class="post-body">
+        {{ post.body | replace('\n', '<br>') | safe }}
+      </div>
+    </article>
+
+    <!-- Edit / Delete buttons — only shown to the author -->
+    {% if current_user.is_authenticated and current_user == post.author %}
+      <div class="d-flex gap-2 mt-5 pt-4 border-top">
+        <a href="{{ url_for('blog.update', id=post.id) }}"
+           class="btn btn-outline-secondary btn-sm">
+          Edit post
+        </a>
+
+        <!-- Delete uses a POST form, not a link, to prevent accidental deletion -->
+        <form method="POST" action="{{ url_for('blog.delete', id=post.id) }}"
+              onsubmit="return confirm('Delete this post? This cannot be undone.')">
+          <button type="submit" class="btn btn-outline-danger btn-sm">
+            Delete
+          </button>
+        </form>
+      </div>
+    {% endif %}
+
+    <!-- Back link -->
+    <div class="mt-4">
+      <a href="{{ url_for('blog.index') }}" class="text-muted small text-decoration-none">
+        ← Back to feed
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
