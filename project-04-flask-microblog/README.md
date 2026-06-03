@@ -12,6 +12,9 @@
 - **Paginated home feed** — 10 posts per page, newest first
 - **User profile pages** — `/user/<username>` shows all posts by that user, paginated
 - **Flash messages** — success, error, and info alerts with Bootstrap dismissal
+- **CSRF protection** — Flask-WTF validates a token on every POST form; requests without it are rejected
+- **XSS-safe rendering** — post bodies are auto-escaped by Jinja2 (no `| safe`); line breaks preserved via CSS
+- **Custom error pages** — branded 404 and 403 templates instead of default Flask error screens
 - **Responsive UI** — Bootstrap 5 grid; works on mobile and desktop
 - **SQLite database** — zero configuration, file-based, managed via SQLAlchemy ORM
 
@@ -26,6 +29,7 @@
 | ORM | Flask-SQLAlchemy 3.1 |
 | Database | SQLite (file: `instance/microblog.db`) |
 | Auth | Flask-Login + Werkzeug password hashing |
+| Security | Flask-WTF (CSRF protection) |
 | Templating | Jinja2 (bundled with Flask) |
 | CSS | Bootstrap 5 (CDN) + custom `style.css` |
 | Config | python-dotenv `.env` file |

@@ -7,7 +7,7 @@ returns a configured Flask application instance.
 Why a factory?
   - A test suite can call create_app('testing') to get an isolated app
     with an in-memory database, without touching the dev database.
-  - Extensions (db, login_manager) are created here without being
+  - Extensions (db, login_manager, csrf) are created here without being
     bound to any app — they attach via init_app() inside the factory.
     This prevents circular imports between models, blueprints, and app.
 
@@ -15,15 +15,17 @@ Extension lifecycle:
   db = SQLAlchemy()       ← created, not bound
   db.init_app(app)        ← bound to THIS app instance inside factory
 """
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 
 from .config import config
 
 # ── Extensions created at module level, not bound to any app yet ──
-db           = SQLAlchemy()
+db            = SQLAlchemy()
 login_manager = LoginManager()
+csrf          = CSRFProtect()
 
 # Redirect unauthenticated users to the login page.
 # 'auth.login' means: the 'login' route inside the 'auth' blueprint.
@@ -48,6 +50,9 @@ def create_app(config_name='default'):
     # ── Attach extensions to this app instance ─────────────────────
     db.init_app(app)
     login_manager.init_app(app)
+    # CSRFProtect validates the csrf_token hidden input on every POST
+    # request automatically. Any POST without a valid token gets a 400.
+    csrf.init_app(app)
 
     # ── Register Blueprints ────────────────────────────────────────
     # Blueprints are imported here (inside the factory) to avoid
@@ -57,6 +62,15 @@ def create_app(config_name='default'):
 
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(blog_blueprint)
+
+    # ── Custom error pages ─────────────────────────────────────────
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('errors/404.html'), 404
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template('errors/403.html'), 403
 
     # ── CLI command: flask init-db ─────────────────────────────────
     @app.cli.command('init-db')

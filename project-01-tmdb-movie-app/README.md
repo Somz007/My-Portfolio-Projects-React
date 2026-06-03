@@ -21,6 +21,8 @@
 - **3D card tilt** — perspective tilt follows the cursor position for a physical, tactile feel
 - **Loading states** — dual concentric-ring spinner; shown during all fetch operations
 - **Error handling** — friendly inline messages for failed requests and empty search results
+- **Error boundary** — root-level boundary catches render errors and shows a recoverable fallback
+- **Race-condition safe** — every fetch uses `AbortController`; stale responses are cancelled on new input
 - **Keyboard accessible** — full focus ring, Escape to close detail, Enter to open cards
 - **Fully responsive** — auto-fill grid from 1 column (320 px) to 6+ columns (1400 px)
 

@@ -12,6 +12,9 @@
       <div class="card-body p-4">
         <form method="POST" action="" novalidate>
 
+          {# CSRF token — Flask-WTF validates this on every POST request #}
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
           <div class="mb-3">
             <label for="title" class="form-label fw-semibold">Title</label>
             <!-- value="{{ post.title }}" pre-fills the input with the existing content -->

@@ -16,6 +16,8 @@
 - **Two-click delete confirm** — first click prompts, second confirms; prevents accidental deletion
 - **Loading skeletons** — shimmer placeholder cards while the first Firestore snapshot loads
 - **Keyboard accessible** — full focus ring, Escape closes lightbox, Enter opens cards
+- **Error boundary** — root-level boundary catches render errors with a recoverable fallback
+- **Code-split bundle** — Firebase auth/firestore split into separate cacheable chunks via Vite `manualChunks`
 
 ---
 

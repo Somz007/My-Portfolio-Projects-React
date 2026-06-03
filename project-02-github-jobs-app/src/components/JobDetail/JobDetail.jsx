@@ -1,14 +1,15 @@
 import { useEffect } from 'react'
+import DOMPurify from 'dompurify'
 import styles from './JobDetail.module.css'
 
 /**
  * JobDetail — centered modal dialog showing the full job listing.
  *
- * Remotive returns job descriptions as HTML strings, so we use
- * dangerouslySetInnerHTML to render them. This is acceptable here because
- * Remotive is a trusted third-party source — the HTML is job board content,
- * not user-generated input. In a production app handling arbitrary HTML you
- * would sanitise it first with DOMPurify.
+ * Remotive returns job descriptions as HTML strings. Even though Remotive
+ * is a reputable source, we never trust third-party HTML blindly — we run
+ * it through DOMPurify before rendering with dangerouslySetInnerHTML. This
+ * strips any <script>, event handlers, or other XSS vectors while keeping
+ * safe formatting tags (headings, lists, links, bold, etc.).
  *
  * Props:
  *   job     — the full Remotive job object (includes .description HTML)
@@ -124,7 +125,7 @@ export default function JobDetail({ job, onClose }) {
             typography styles to normalise headings, lists, and code blocks. */}
         <div
           className={styles.descriptionBody}
-          dangerouslySetInnerHTML={{ __html: job.description }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.description) }}
         />
 
         {/* ── CTA ────────────────────────────────────────────────── */}

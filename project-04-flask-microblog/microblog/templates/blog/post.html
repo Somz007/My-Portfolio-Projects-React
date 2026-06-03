@@ -32,10 +32,12 @@
 
       <hr class="mb-4">
 
-      <!-- Post body — nl2br converts newlines to <br> for readable paragraphs -->
-      <div class="post-body">
-        {{ post.body | replace('\n', '<br>') | safe }}
-      </div>
+      <!--
+        post.body is rendered WITHOUT | safe so Jinja2 auto-escapes any HTML
+        the user typed (preventing XSS). CSS white-space: pre-wrap preserves
+        line breaks visually without needing <br> tags or | safe.
+      -->
+      <div class="post-body" style="white-space: pre-wrap;">{{ post.body }}</div>
     </article>
 
     <!-- Edit / Delete buttons — only shown to the author -->
@@ -49,6 +51,8 @@
         <!-- Delete uses a POST form, not a link, to prevent accidental deletion -->
         <form method="POST" action="{{ url_for('blog.delete', id=post.id) }}"
               onsubmit="return confirm('Delete this post? This cannot be undone.')">
+          {# CSRF token — Flask-WTF validates this on every POST request #}
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-outline-danger btn-sm">
             Delete
           </button>

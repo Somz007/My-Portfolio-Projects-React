@@ -77,8 +77,9 @@ export default function PhotoCard({ photo, onOpen, onDelete }) {
               <img
                 className={styles.uploaderAvatar}
                 src={photo.photoURL}
-                alt=""
+                alt={`${photo.displayName}'s avatar`}
                 referrerPolicy="no-referrer"
+                loading="lazy"
               />
             )}
             <span className={styles.uploaderName}>{photo.displayName}</span>

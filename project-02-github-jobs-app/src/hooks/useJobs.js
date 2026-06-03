@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 
 /* ── Config ───────────────────────────────────────────────────────
    Base URL is read from .env so it can be swapped without touching
@@ -155,26 +155,35 @@ export function useJobs() {
    *
    * @param {string} title — the keyword from the search form
    */
+  /*
+   * AbortController ref — stores the controller for the current in-flight
+   * request so we can cancel it if the user submits a new search before
+   * the previous one completes (prevents stale results overwriting fresh ones).
+   */
+  const abortRef = useRef(null)
+
   const search = useCallback(async (title) => {
     if (!title.trim()) {
       setError('Please enter a job title or keyword to search.')
       return
     }
 
+    /* Cancel any in-flight request from a previous search. */
+    abortRef.current?.abort()
+    abortRef.current = new AbortController()
+
     setLoading(true)
     setError(null)
     setHasSearched(true)
-    setCurrentPage(1)   // New search always starts at page 1
-    setAllJobs([])      // Clear stale results immediately so old cards don't flash
+    setCurrentPage(1)
+    setAllJobs([])
 
     try {
       const url = new URL(BASE_URL)
       url.searchParams.set('search', title.trim())
-      /* Fetch up to 100 results — Remotive's practical max for free tier.
-         All pagination happens client-side on this set. */
       url.searchParams.set('limit', '100')
 
-      const res = await fetch(url.toString())
+      const res = await fetch(url.toString(), { signal: abortRef.current.signal })
 
       if (!res.ok) throw new Error(`Remotive API error: status ${res.status}`)
 
@@ -187,12 +196,15 @@ export function useJobs() {
         setError(`No remote jobs found for "${title}". Try a broader keyword.`)
       }
     } catch (err) {
-      setError('Failed to fetch jobs. Check your connection and try again.')
-      setAllJobs([])
+      /* AbortError fires when we cancel — not a real error. */
+      if (err.name !== 'AbortError') {
+        setError('Failed to fetch jobs. Check your connection and try again.')
+        setAllJobs([])
+      }
     } finally {
-      setLoading(false)
+      if (!abortRef.current?.signal.aborted) setLoading(false)
     }
-  }, []) // No deps — BASE_URL is a module-level constant
+  }, [])
 
   /* ── Pagination navigation ──────────────────────────────────── */
 

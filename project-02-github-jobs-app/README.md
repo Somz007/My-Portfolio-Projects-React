@@ -21,6 +21,9 @@
 - **Relative timestamps** — "3 days ago", "2 weeks ago" computed from publication date
 - **Company avatars** — logo image with 2-letter initial fallback on broken URLs
 - **Keyboard accessible** — Tab navigation, Enter to open cards, Escape to close modal
+- **Sanitized HTML** — job descriptions run through DOMPurify before render (XSS-safe)
+- **Error boundary** — root-level boundary catches render errors with a recoverable fallback
+- **Race-condition safe** — searches use `AbortController`; superseded requests are cancelled
 - **Responsive** — stacks to single column on mobile; page numbers hidden in favour of Prev/Next on small screens
 - **No API key** — works out of the box; just `npm install && npm run dev`
 
@@ -178,7 +181,11 @@ function getPageRange(current, total) {
 
 ### `dangerouslySetInnerHTML` and trust
 
-Remotive's `description` field is HTML. We render it with `dangerouslySetInnerHTML` because it comes from a trusted API source (Remotive moderates their job listings). In a production app accepting arbitrary user-generated HTML you would sanitise with [DOMPurify](https://github.com/cure53/DOMPurify) first.
+Remotive's `description` field is HTML. We never trust third-party HTML blindly — it's run through [DOMPurify](https://github.com/cure53/DOMPurify) before `dangerouslySetInnerHTML` renders it, stripping any `<script>` tags, inline event handlers, or other XSS vectors while preserving safe formatting (headings, lists, links).
+
+```js
+dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.description) }}
+```
 
 ---
 

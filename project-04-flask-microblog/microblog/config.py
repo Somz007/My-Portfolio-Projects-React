@@ -32,6 +32,9 @@ class Config:
     # Disable modification tracking — we don't use it and it wastes memory.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Enable CSRF protection on all POST forms via Flask-WTF.
+    WTF_CSRF_ENABLED = True
+
     # Show 10 posts per page on the home feed and profile pages.
     POSTS_PER_PAGE = 10
 
@@ -42,8 +45,15 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
-    """Production: debug off, strong secret key required."""
+    """Production: debug off, strong secret key enforced."""
     DEBUG = False
+
+    def __init__(self):
+        # Fail fast in production if SECRET_KEY was not set — a weak key
+        # means all session cookies and CSRF tokens are compromised.
+        import os
+        if not os.environ.get('SECRET_KEY'):
+            raise ValueError('SECRET_KEY environment variable must be set in production.')
 
 
 # Map string names to config classes — used by create_app().
